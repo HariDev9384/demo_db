@@ -5,7 +5,7 @@ FROM openjdk:21
 WORKDIR /app
 
 # Copy the JAR file into the container at /app
-COPY /demo_db.jar ./demo_db.jar
+COPY target/demo_db.jar ./demo_db.jar
 
 # Specify the command to run your application
 CMD ["java", "-jar", "/app/demo_db.jar"]
