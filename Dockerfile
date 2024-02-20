@@ -1,14 +1,18 @@
 # Use the official OpenJDK image as a base image
-FROM openjdk:21
+FROM maven:3.8.4-openjdk-17-slim
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Create the target directory inside the container
-RUN mkdir target
+# Copy the entire project into the container
+COPY . .
 
-# Copy the JAR file into the container at /app/target
-COPY target/demo_db.jar ./target/demo_db.jar
+# Update Maven dependencies
+COPY pom.xml .
+RUN mvn clean install -DskipTests
+
+# Build the project inside the container
+RUN mvn clean package
 
 # Specify the command to run your application
 CMD ["java", "-jar", "target/demo_db.jar"]
